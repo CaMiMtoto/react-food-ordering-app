@@ -6,13 +6,13 @@ import MealsSummary from "../Meals/MealsSummary.jsx";
 function HomeHero(props) {
     return (
         <div className="py-5 ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-md-6">
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 col-md-6">
                         <MealsSummary/>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <div class="hero-img">
+                    <div className="col-12 col-md-6">
+                        <div className="hero-img">
                             {/*<img src={} alt="hero-img" class="img-fluid tw-h-52"/>*/}
                         </div>
                     </div>

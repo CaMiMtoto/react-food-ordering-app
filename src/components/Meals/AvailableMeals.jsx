@@ -37,8 +37,8 @@ const AvailableMeals = () => (
     <section>
         <div className="row">
             {DUMMY_MEALS.map(meal => (
-              <div className="col-md-6 col-lg-4 col-xl-3 my-2">
-                  <MealItem key={meal.id} name={meal.name} description={meal.description} price={meal.price}/>
+              <div className="col-md-6 col-lg-4 col-xl-3 my-2"  key={meal.id}>
+                  <MealItem key={meal.id} id={meal.id} name={meal.name} description={meal.description} price={meal.price}/>
               </div>
             ))}
         </div>
