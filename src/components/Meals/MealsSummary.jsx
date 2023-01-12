@@ -7,7 +7,7 @@ const MealsSummary = () => (
             Yummy, Delicious Food
         </h1>
         <div className="typewriter">
-            <h1 className="mb-4">
+            <h1 className="mb-4 ">
                 Delivered To You
             </h1>
         </div>

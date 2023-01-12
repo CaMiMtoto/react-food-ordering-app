@@ -1,13 +1,19 @@
-import {IconGrill, IconSalad, IconShoppingBag, IconShoppingCart} from "@tabler/icons";
+import {IconGrill} from "@tabler/icons";
+import {useContext} from "react";
+import CartContext from "../../store/cart-context.jsx";
 
 export default function Header() {
+    const cartCtx = useContext(CartContext);
+    const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => curNumber + item.amount, 0);
+
     return (
         <nav className="navbar navbar-expand-lg py-3 navbar-dark  bg-transparent">
             <div className="container">
                 <a className="navbar-brand" href="#">
                     Yummy
                 </a>
-                <button className="navbar-toggler rounded-0 shadow-none border-0" type="button" data-bs-toggle="collapse"
+                <button className="navbar-toggler rounded-0 shadow-none border-0" type="button"
+                        data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -18,14 +24,15 @@ export default function Header() {
                             <a className="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li className="nav-item">
-                            <a className="btn btn-success rounded-pill px-4 d-flex align-items-center gap-1 fw-bold position-relative "
+                            <a data-bs-toggle="modal" data-bs-target="#cartModal"
+                               className="btn btn-success rounded-pill px-4 d-flex align-items-center gap-1 fw-bold position-relative "
                                href="#">
                                 <IconGrill className="tw-h-6 tw-w-6"/>
                                 Your Cart
                                 <span
                                     className="py-1 px-2 badge rounded-pill tw-bg-green-800">
-                                    3
-                                    <span className="visually-hidden">unread messages</span>
+                                    {numberOfCartItems}
+                                    <span className="visually-hidden">items</span>
                                   </span>
                             </a>
                         </li>
