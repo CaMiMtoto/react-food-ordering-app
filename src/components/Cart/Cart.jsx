@@ -1,15 +1,31 @@
 import React, {useContext} from 'react';
 import Modal from "../UI/Modal.jsx";
 import CartContext from "../../store/cart-context.jsx";
-import {IconExclamationCircle, IconPlus,IconMinus} from "@tabler/icons";
+import {IconExclamationCircle} from "@tabler/icons";
+import CartItem from "./CartItem.jsx";
 
 
-const Cart = (props) => {
+const Cart = () => {
     let cartCtx = useContext(CartContext);
     let items = cartCtx.items;
     // const cartItems = ;
-    let totalAmount = items.reduce((sum, item) => sum + item.amount * item.price, 0).toFixed(2);
+    let totalAmount = items.reduce((sum, item) => sum + item.amount * item.price, 0).toLocaleString();
     const hasItems = cartCtx.items.length > 0;
+    const cartItemQtyRemoveHandler = (id) => {
+        cartCtx.removeItemQty(id);
+    }
+    const cartItemAddHandler = (item) => {
+        cartCtx.addItem(item);
+    }
+    const cartItemRemoveHandler = (id) => {
+        cartCtx.removeItem(id);
+    }
+
+    const clearCartHandler = () => {
+        cartCtx.clearCart();
+    }
+
+
     return (
         <Modal
             id="cartModal"
@@ -20,24 +36,13 @@ const Cart = (props) => {
                     <div className="list-group mb-4">
                         {
                             items.map(item =>
-                                <div className="list-group-item" key={item.id}>
-                                    <h4 className="fw-bold">{item.name}</h4>
-                                    <div className="d-flex gap-2 align-items-center justify-content-between">
-                                        <div className="d-flex gap-2 align-items-center">
-                                            <span className="h5 fw-bold text-danger mb-0">${item.price}</span>
-                                            <span className="px-3  rounded-1 fw-bold"> x {item.amount}</span>
-                                        </div>
-
-                                        <div className="btn-group">
-                                            <button className="btn btn-sm btn-outline-primary">
-                                                <IconMinus className="tw-h-5 tw-w-5"/>
-                                            </button>
-                                            <button className="btn btn-sm btn-outline-primary ">
-                                                <IconPlus className="tw-h-5 tw-w-5"/>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <CartItem
+                                    key={item.id}
+                                    item={item}
+                                    onRemove={cartItemRemoveHandler.bind(null, item.id)}
+                                    onQtyRemove={cartItemQtyRemoveHandler.bind(null, item.id)}
+                                    onAdd={cartItemAddHandler.bind(null, item)}
+                                />
                             )
                         }
                     </div>
@@ -47,6 +52,10 @@ const Cart = (props) => {
                     </div>
                     <div className="d-flex gap-2 justify-content-end">
                         <button type="type" className="btn btn-success px-3 rounded-pill btn-sm">Order Now</button>
+                        <button onClick={clearCartHandler} type="type"
+                                className="btn btn-danger px-3 rounded-pill btn-sm">
+                            Clear Cart
+                        </button>
                         <button type="button" data-bs-dismiss="modal"
                                 className="btn btn-outline-success px-3 rounded-pill btn-sm">Close
                         </button>

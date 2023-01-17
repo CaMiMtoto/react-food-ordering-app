@@ -1,10 +1,27 @@
 import {IconGrill} from "@tabler/icons";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import CartContext from "../../store/cart-context.jsx";
 
 export default function Header() {
     const cartCtx = useContext(CartContext);
-    const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => curNumber + item.amount, 0);
+    const {items} = cartCtx;
+    const numberOfCartItems = items.reduce((curNumber, item) => curNumber + item.amount, 0);
+    const [itemAdded, setItemAdded] = useState(false);
+    const cartClasses = `btn btn-success rounded-pill px-4 d-flex align-items-center gap-1 fw-bold ${itemAdded ? 'bump' : ''}`;
+
+
+    useEffect(() => {
+        if (items.length === 0) {
+            return;
+        }
+        setItemAdded(true);
+        const timer = setTimeout(() => {
+            setItemAdded(false);
+        }, 300);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [items]);
 
     return (
         <nav className="navbar navbar-expand-lg py-3 navbar-dark  bg-transparent">
@@ -25,7 +42,7 @@ export default function Header() {
                         </li>
                         <li className="nav-item">
                             <a data-bs-toggle="modal" data-bs-target="#cartModal"
-                               className="btn btn-success rounded-pill px-4 d-flex align-items-center gap-1 fw-bold position-relative "
+                               className={cartClasses}
                                href="#">
                                 <IconGrill className="tw-h-6 tw-w-6"/>
                                 Your Cart
